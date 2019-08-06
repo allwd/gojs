@@ -12,9 +12,8 @@ export default function initDiagram() {
             if (e && e.modelChange === "nodeDataArray") {
                 actions.reloadLinks();
             }
-        }
+        },
+        "nodeTemplate": templates.nodeTemplate,
+        "groupTemplate": templates.groupTemplate
     })
-
-    state.diagram.nodeTemplate = templates.nodeTemplate;
-    state.diagram.groupTemplate = templates.groupTemplate
 }
