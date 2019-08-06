@@ -1,6 +1,6 @@
 import go from 'gojs';
-import actions from './actions.js';
-import config from './config.js';
+import actions from './actions';
+import config from './config';
 const make = go.GraphObject.make;
 
 function makePort(portId, alignment, spot, fromLinkable, toLinkable) {

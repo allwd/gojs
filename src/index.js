@@ -1,11 +1,11 @@
 import go from 'gojs';
-import initDiagram from './diagram.js';
-import initPalette from './palette.js';
-import initInspector from './inspector.js';
-import initOverview from './overview.js';
-import state from './state.js';
-import actions from './actions.js';
-import config from './config.js';
+import initDiagram from './diagram';
+import initPalette from './palette';
+import initInspector from './inspector';
+import initOverview from './overview';
+import state from './state';
+import actions from './actions';
+import config from './config';
 
 window.onload = function () {
     initDiagram();

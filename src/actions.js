@@ -1,6 +1,5 @@
 import go from 'gojs';
-import state from './state.js'
-
+import state from './state';
 
 function save() {
     document.getElementById("savedModel").value = state.diagram.model.toJson();

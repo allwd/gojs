@@ -1,6 +1,6 @@
 import go from 'gojs';
-import state from './state.js'
-import config from './config'
+import state from './state';
+import config from './config';
 const make = go.GraphObject.make;
 
 export default function initPalette() {

@@ -1,7 +1,7 @@
 import go from 'gojs';
-import state from './state.js';
-import actions from './actions.js';
-import templates from './templates.js';
+import state from './state';
+import actions from './actions';
+import templates from './templates';
 const make = go.GraphObject.make;
 
 export default function initDiagram() {
