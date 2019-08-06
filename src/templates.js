@@ -1,5 +1,4 @@
 import go from 'gojs';
-import state from './state.js';
 import actions from './actions.js';
 import config from './config.js';
 const make = go.GraphObject.make;
