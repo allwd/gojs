@@ -132,21 +132,21 @@ const groupTemplate = make(go.Group, "Vertical",
                 })
     },
     new go.Binding("background", "isHighlighted", isHighlighted => isHighlighted ? "rgba(255,0,0,0.2)" : "transparent").ofObject(),
-    make(go.TextBlock,
-        {
-            font: "bold 19px sans-serif",
-            isMultiline: false,
-            editable: true,
-            background: "rgb(240,240,240)",
-            alignment: new go.Spot(0, 0),
-            minSize: new go.Size(50, 22)
-        },
-        new go.Binding("text", "name").makeTwoWay()),
     make(go.Panel, "Auto",
         { name: "PANEL" },
+        make(go.TextBlock,
+            {
+                font: "bold 19px sans-serif",
+                isMultiline: false,
+                editable: true,
+                textAlign: "center",
+                background: "rgb(240,240,240)",
+                minSize: new go.Size(50, 22)
+            },
+            new go.Binding("text", "name").makeTwoWay()),
         make(go.Shape, "Rectangle",
             { fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3, minSize: new go.Size(100, 100) }),
-        make(go.Placeholder, { padding: 15 })
+        make(go.Placeholder, { padding: 25 })
     )
 );
 
