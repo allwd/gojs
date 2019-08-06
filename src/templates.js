@@ -56,7 +56,6 @@ const nodeTemplate = make(go.Node, "Auto",
     make(go.Shape, "Ellipse",
         new go.Binding("figure", "figure"),
         new go.Binding("fill", "name"),
-        new go.Binding("stroke", "stroke"),
         new go.Binding("width", "width"),
         new go.Binding("height", "height")
     ),
@@ -73,6 +72,7 @@ const nodeTemplate = make(go.Node, "Auto",
             font: config.font,
             name: "TEXT"
         },
+        new go.Binding("stroke", "color"),
         new go.Binding("text", "name").makeTwoWay()
     )
 )
