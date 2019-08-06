@@ -117,11 +117,12 @@ const linkTemplate = make(go.Link,
 
 const groupTemplate = make(go.Group, "Vertical",
     {
+        resizable: true,
         mouseDragEnter: (e, group, _) => actions.highlightGroup(e, group, true),
         mouseDragLeave: (e, group, _) => actions.highlightGroup(e, group, false),
         mouseDrop: (e, node) => actions.finishDrop(e, node),
         selectionObjectName: "PANEL",
-        computesBoundsAfterDrag: true,
+        // computesBoundsAfterDrag: true,
         handlesDragDropForMembers: true,
         ungroupable: true,
         layout:
@@ -133,20 +134,23 @@ const groupTemplate = make(go.Group, "Vertical",
     },
     new go.Binding("background", "isHighlighted", isHighlighted => isHighlighted ? "rgba(255,0,0,0.2)" : "transparent").ofObject(),
     make(go.Panel, "Auto",
-        { name: "PANEL" },
+        make(go.Shape, "Rectangle",
+            {
+                minSize: new go.Size(100, 100),
+                fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3,
+                stretch: go.GraphObject.Fill
+            }),
+        make(go.Placeholder, { padding: 25 }),
         make(go.TextBlock,
             {
                 font: "bold 19px sans-serif",
                 isMultiline: false,
                 editable: true,
                 textAlign: "center",
-                background: "rgb(240,240,240)",
-                minSize: new go.Size(50, 22)
+                desiredSize: new go.Size(NaN, NaN),
+                alignment: go.Spot.Top
             },
             new go.Binding("text", "name").makeTwoWay()),
-        make(go.Shape, "Rectangle",
-            { fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3, minSize: new go.Size(100, 100) }),
-        make(go.Placeholder, { padding: 25 })
     )
 );
 

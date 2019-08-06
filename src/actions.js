@@ -74,11 +74,9 @@ function highlightGroup(event, group, show) {
     }
     event.handled = true;
     if (show) {
-        // cannot depend on the group.diagram.selection in the case of external drag-and-drops;
-        // instead depend on the DraggingTool.draggedParts or .copiedParts
-        var tool = group.diagram.toolManager.draggingTool;
-        var map = tool.draggedParts || tool.copiedParts;  // this is a Map
-        // now we can check to see if the Group will accept membership of the dragged Parts
+        const tool = group.diagram.toolManager.draggingTool;
+        const map = tool.draggedParts || tool.copiedParts;
+        
         if (group.canAddMembers(map.toKeySet())) {
             group.isHighlighted = true;
             return;
