@@ -22,20 +22,20 @@ function load() {
 }
 
 function exportToSvg() {
-    var svgWindow = window.open();
+    const svgWindow = window.open();
 
     if (!svgWindow) {
         return;
     }
 
-    var size = new go.Size(700, 960);
-    var bounds = state.diagram.documentBounds;
-    var x = bounds.x;
-    var y = bounds.y;
+    const size = new go.Size(700, 960);
+    const bounds = state.diagram.documentBounds;
+    let x = bounds.x;
+    let y = bounds.y;
 
     while (y < bounds.bottom) {
         while (x < bounds.right) {
-            var svg = state.diagram.makeSVG({ scale: 1.0, position: new go.Point(x, y), size: size });
+            const svg = state.diagram.makeSVG({ scale: 1.0, position: new go.Point(x, y), size: size });
             svgWindow.document.body.appendChild(svg);
             x += size.width;
         }
@@ -43,6 +43,15 @@ function exportToSvg() {
         x = bounds.x;
         y += size.height;
     }
+}
+
+function exportToJpeg() {
+    const img = state.diagram.makeImageData({
+        scale: 1.0,
+        type: "image/jpeg",
+        background: "white"
+    })
+    window.open(img);
 }
 
 function finishDrop(event, group) {
@@ -109,6 +118,7 @@ async function reloadLinks(event = null) {
 
 export default {
     exportToSvg,
+    exportToJpeg,
     save,
     load,
     finishDrop,
