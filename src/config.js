@@ -11,7 +11,10 @@ const sample = [
     { "fill": "blue", "figure": "Cube", "category": "Cube", "name": "Blue", "key": -2, "loc": "-211 -150" }
 ]
 
+const font = "bold 9pt Helvetica, Arial, sans-serif"
+
 export default {
     sample,
-    palette
+    palette,
+    font
 }

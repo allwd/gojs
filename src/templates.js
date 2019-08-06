@@ -1,5 +1,6 @@
 import go from 'gojs';
 import actions from './actions.js';
+import config from './config.js';
 const make = go.GraphObject.make;
 
 function makePort(portId, alignment, spot, fromLinkable, toLinkable) {
@@ -69,7 +70,7 @@ const nodeTemplate = make(go.Node, "Auto",
             maxSize: new go.Size(200, NaN),
             wrap: go.TextBlock.WrapFit,
             textAlign: "center",
-            font: "bold 9pt Helvetica, Arial, sans-serif",
+            font: config.font,
             name: "TEXT"
         },
         new go.Binding("text", "name").makeTwoWay()
@@ -80,32 +81,33 @@ const linkTemplate = make(go.Link,
     {
         routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpOver,
-        corner: 5, toShortLength: 4,
+        corner: 5, 
+        toShortLength: 4,
         relinkableFrom: true,
         relinkableTo: true,
         reshapable: true,
         resegmentable: true,
-        mouseEnter: function (e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)"; },
-        mouseLeave: function (e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
-        selectionAdorned: false
+        selectionAdorned: false,
+        mouseEnter: function (_, link) { link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)"; },
+        mouseLeave: function (_, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; }
     },
     new go.Binding("points").makeTwoWay(),
     make(go.Shape,
         { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
     make(go.Shape,
         { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-        new go.Binding("stroke", "isSelected", function (sel) { return sel ? "dodgerblue" : "gray"; }).ofObject()),
+        new go.Binding("stroke", "isSelected", isSelected => isSelected ? "dodgerblue" : "gray" ).ofObject()),
     make(go.Shape,
         { toArrow: "standard", strokeWidth: 0, fill: "gray" }),
     make(go.Panel, "Auto",
-        { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
+        { visible: true, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
         new go.Binding("visible", "visible").makeTwoWay(),
         make(go.Shape, "RoundedRectangle",
             { fill: "#F8F8F8", strokeWidth: 0 }),
-        make(go.TextBlock, "Link name",
+        make(go.TextBlock, "LINK NAME",
             {
                 textAlign: "center",
-                font: "10pt helvetica, arial, sans-serif",
+                font: config.font,
                 stroke: "#333333",
                 editable: true
             },
@@ -115,8 +117,8 @@ const linkTemplate = make(go.Link,
 
 const groupTemplate = make(go.Group, "Vertical",
     {
-        mouseDragEnter: (e, group, prev) => actions.highlightGroup(e, group, true),
-        mouseDragLeave: (e, group, next) => actions.highlightGroup(e, group, false),
+        mouseDragEnter: (e, group, _) => actions.highlightGroup(e, group, true),
+        mouseDragLeave: (e, group, _) => actions.highlightGroup(e, group, false),
         mouseDrop: (e, node) => actions.finishDrop(e, node),
         selectionObjectName: "PANEL",
         computesBoundsAfterDrag: true,
