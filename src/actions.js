@@ -1,6 +1,17 @@
 import go from 'gojs';
 import state from './state';
 
+/**
+ *   @example
+ *   // updates node with key -2's name to green 
+ *   app.actions.updateData(app.state.diagram.findNodeForKey("-2"), "name", "Green")
+ */
+function updateData(node, key, value) {
+    state.diagram.model.commit(model => {
+        model.set(node.data, key, value);
+    }, `change ${key} to ${String(value)}`)
+}
+
 function save() {
     document.getElementById("savedModel").value = state.diagram.model.toJson();
     state.diagram.isModified = false;
@@ -98,5 +109,6 @@ export default {
     load,
     finishDrop,
     highlightGroup,
-    reloadLinks
+    reloadLinks,
+    updateData
 }
