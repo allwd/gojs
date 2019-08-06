@@ -12,6 +12,10 @@ function updateData(node, key, value) {
     }, `change ${key} to ${String(value)}`)
 }
 
+function validateConnection(fromNode, fromPort, toNode, toPort) {
+    return fromNode.data.figure !== toNode.data.figure || String(fromNode.data.name).toLowerCase() === "green"
+}
+
 function save() {
     document.getElementById("savedModel").value = state.diagram.model.toJson();
     state.diagram.isModified = false;
@@ -117,6 +121,7 @@ async function reloadLinks(event = null) {
 }
 
 export default {
+    validateConnection,
     exportToSvg,
     exportToJpeg,
     save,
