@@ -1,14 +1,29 @@
 import go from 'gojs';
 import actions from './actions.js';
-import config from './config.js';
 const make = go.GraphObject.make;
+
+const resizeAdornmentTemplate =
+    make(go.Adornment, "Spot",
+        { locationSpot: go.Spot.Right },
+        make(go.Placeholder),
+        make(go.Shape, { alignment: go.Spot.TopLeft, cursor: "nw-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+        make(go.Shape, { alignment: go.Spot.Top, cursor: "n-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+        make(go.Shape, { alignment: go.Spot.TopRight, cursor: "ne-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+
+        make(go.Shape, { alignment: go.Spot.Left, cursor: "w-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+        make(go.Shape, { alignment: go.Spot.Right, cursor: "e-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+
+        make(go.Shape, { alignment: go.Spot.BottomLeft, cursor: "se-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+        make(go.Shape, { alignment: go.Spot.Bottom, cursor: "s-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+        make(go.Shape, { alignment: go.Spot.BottomRight, cursor: "sw-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" })
+    );
 
 const nodeTemplate = make(go.Node, "Auto",
     {
         locationSpot: go.Spot.Center
     },
     new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-    { resizable: true, resizeObjectName: "PANEL", resizeAdornmentTemplate: config.nodeResizeAdornmentTemplate },
+    { resizable: true, resizeObjectName: "PANEL", resizeAdornmentTemplate },
     make(go.Shape, "Ellipse",
         new go.Binding("figure", "figure"),
         new go.Binding("fill", "name"),
@@ -66,5 +81,6 @@ const groupTemplate = make(go.Group, "Vertical",
 
 export default {
     groupTemplate,
-    nodeTemplate
+    nodeTemplate,
+    resizeAdornmentTemplate
 }
