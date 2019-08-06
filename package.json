@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "name": "gojs",
+  "private": true,
+  "scripts": {
+    "start": "webpack",
+    "dev": "webpack-dev-server --port 3000 --hot"
+  },
+  "dependencies": {
+    "gojs": "^2.0.15"
+  },
+  "devDependencies": {
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  }
+}

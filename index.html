@@ -3,16 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <title>Test</title>
-    <link rel="stylesheet" href="app.css" type="text/css" />
+    <link rel="stylesheet" href="src/app.css" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="src/js/DataInspector.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/gojs/release/go.js"></script>
-    <script src="scripts/DataInspector.js"></script>
-    <script src="scripts/Figures.js"></script>
 </head>
 
 <body>
@@ -26,7 +24,7 @@
             </div>
             <div class="content">
                 <div class="options">
-                    <button onclick="exportToSvg()">
+                    <button onclick="app.actions.exportToSvg()">
                         SVG
                     </button>
                 </div>
@@ -55,39 +53,7 @@
         </div>
         <input type="hidden" style="display: none" id="savedModel" />
     </div>
-    <script async src="script.js"></script>
-    <script defer>
-        let diagram;
-        let palette;
-        let overview;
-        let inspector;
-        let test;
-
-        const make = go.GraphObject.make;
-
-        window.onload = function () {
-            initDiagram();
-            diagram.model = new go.GraphLinksModel([
-                { "figure": "Group", "category": "Group", "isGroup": true, "name": "Test", "key": -4, "loc": "-259 -40" },
-                { "fill": "Teal", "figure": "TriangleUp", "category": "TriangleUp", "name": "Teal", "key": -3, "loc": "-219.9186046511627 -40.284883720930225" },
-                { "fill": "blue", "figure": "Cube", "category": "Cube", "name": "Blue", "key": -2, "loc": "-211 -150" }
-            ]);
-
-            diagram.select(diagram.nodes.first());
-            initPalette();
-            initOverview();
-            initInspector();
-
-            diagram.requestUpdate();
-            palette.requestUpdate();
-        }
-
-        window.onresize = function () {
-            if (typeof diagram !== "undefined") {
-                diagram.requestUpdate();
-            }
-        }
-    </script>
+    <script async src="dist/app.bundle.js"></script>
 </body>
 
 </html>
