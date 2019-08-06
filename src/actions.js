@@ -92,7 +92,7 @@ async function reloadLinks(event = null) {
     if (event && event.modelChange !== "nodeDataArray") {
         return
     }
-    
+
     const exclude = []
     const nodes = state.diagram.model.nodeDataArray.filter(node => {
         if (String(node.name).toLowerCase() === "green") {
