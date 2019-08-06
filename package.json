@@ -3,8 +3,8 @@
   "name": "gojs",
   "private": true,
   "scripts": {
-    "start": "webpack",
-    "dev": "webpack-dev-server --port 3000 --hot"
+    "build": "webpack",
+    "start": "webpack-dev-server --port 3000 --hot"
   },
   "dependencies": {
     "gojs": "^2.0.15"

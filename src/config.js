@@ -1,6 +1,13 @@
 import go from 'gojs';
 const make = go.GraphObject.make;
 
+const palette = [
+    { figure: "RoundedRectangle", name: "Green", width: 150, height: 70 },
+    { figure: "Square", name: "Blue", width: 75, height: 75 },
+    { figure: "TriangleUp", name: "Red", width: 120, height: 90 },
+    { figure: "Group", category: "Group", name: "", isGroup: true }
+]
+
 const sample = [
     { "figure": "Group", "category": "Group", "isGroup": true, "name": "Test", "key": -4, "loc": "-259 -40" },
     { "fill": "Teal", "figure": "TriangleUp", "category": "TriangleUp", "name": "Teal", "key": -3, "loc": "-219.9186046511627 -40.284883720930225" },
@@ -25,5 +32,6 @@ const nodeResizeAdornmentTemplate =
 
 export default {
     sample,
-    nodeResizeAdornmentTemplate
+    nodeResizeAdornmentTemplate,
+    palette
 }

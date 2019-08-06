@@ -25,7 +25,9 @@ export default function initDiagram() {
             make(go.Shape, "Ellipse",
                 new go.Binding("figure", "figure"),
                 new go.Binding("fill", "name"),
-                new go.Binding("stroke", "stroke")
+                new go.Binding("stroke", "stroke"),
+                new go.Binding("width", "width"),
+                new go.Binding("height", "height")
             ),
             make(go.TextBlock,
                 {
@@ -33,7 +35,6 @@ export default function initDiagram() {
                     maxSize: new go.Size(200, NaN),
                     wrap: go.TextBlock.WrapFit,
                     textAlign: "center",
-                    editable: true,
                     font: "bold 9pt Helvetica, Arial, sans-serif",
                     name: "TEXT",
                     textEdited: (a, b, c) => actions.reloadLinks()
