@@ -14,6 +14,7 @@ export default function initDiagram() {
             }
         },
         "nodeTemplate": templates.nodeTemplate,
-        "groupTemplate": templates.groupTemplate
+        "groupTemplate": templates.groupTemplate,
+        "linkTemplate": templates.linkTemplate
     })
 }
