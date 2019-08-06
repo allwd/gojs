@@ -51,7 +51,9 @@ const groupTemplate = make(go.Group, "Vertical",
             font: "bold 19px sans-serif",
             isMultiline: false,
             editable: true,
-            background: "rgb(240,240,240)"
+            background: "rgb(240,240,240)",
+            alignment: new go.Spot(0, 0),
+            minSize: new go.Size(50, 22)
         },
         new go.Binding("text", "name").makeTwoWay()),
     make(go.Panel, "Auto",
