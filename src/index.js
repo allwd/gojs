@@ -17,9 +17,6 @@ window.onload = function () {
     state.diagram.select(state.diagram.nodes.first());
 
     state.diagram.toolManager.linkingTool.linkValidation = actions.validateConnection
-
-    state.diagram.requestUpdate();
-    state.palette.requestUpdate();
 }
 
 window.onresize = function () {

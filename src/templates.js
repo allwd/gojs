@@ -34,15 +34,17 @@ function makePort(portId, alignment, spot, fromLinkable, toLinkable) {
 const nodeTemplate = make(go.Node, "Auto",
     {
         locationSpot: go.Spot.Center,
-        resizable: true, 
-        resizeObjectName: "PANEL",
+        resizable: true,
+        resizeObjectName: "test"
     },
     new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
     make(go.Shape, "Ellipse",
+        {
+            name: "test"
+        },
         new go.Binding("figure", "figure"),
         new go.Binding("fill", "name"),
-        new go.Binding("width", "width"),
-        new go.Binding("height", "height")
+        new go.Binding("size", "size", go.Size.parse).makeTwoWay(go.Size.stringify)
     ),
     makePort("T", go.Spot.Top, go.Spot.Top, false, true),
     makePort("L", go.Spot.Left, go.Spot.Left, true, true),
@@ -99,38 +101,31 @@ const linkTemplate = make(go.Link,
     )
 );
 
-const groupTemplate = make(go.Group, "Vertical",
+const groupTemplate = make(go.Group, "Auto",
     {
         resizable: true,
         handlesDragDropForMembers: true,
         ungroupable: true,
-        layout:
-            make(go.GridLayout,
-                {
-                    wrappingColumn: 1, alignment: go.GridLayout.Position,
-                    cellSize: new go.Size(1, 1), spacing: new go.Size(4, 4)
-                }),
+        resizeObjectName: 'group',
         mouseDragEnter: (e, group, _) => actions.highlightGroup(e, group, true),
         mouseDragLeave: (e, group, _) => actions.highlightGroup(e, group, false),
         mouseDrop: (e, node) => actions.finishDrop(e, node)
     },
     new go.Binding("background", "isHighlighted", isHighlighted => isHighlighted ? "rgba(255,0,0,0.2)" : "transparent").ofObject(),
-    make(go.Panel, "Auto",
+    make(go.Panel, "Spot",
         make(go.Shape, "Rectangle",
             {
+                name: 'group',
                 minSize: new go.Size(100, 100),
-                fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3,
-                stretch: go.GraphObject.Fill
+                fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3
             }),
-        make(go.Placeholder, { padding: 25 }),
         make(go.TextBlock,
             {
                 font: "bold 19px sans-serif",
                 isMultiline: false,
                 editable: true,
-                textAlign: "center",
-                desiredSize: new go.Size(NaN, NaN),
-                alignment: go.Spot.Top
+                alignment: go.Spot.Top,
+                alignmentFocus: go.Spot.Top
             },
             new go.Binding("text", "name").makeTwoWay()),
     )
