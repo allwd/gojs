@@ -1,3 +1,5 @@
+import go from 'gojs';
+
 const palette = [
     { figure: "RoundedRectangle", name: "Green", width: 150, height: 70 },
     { figure: "Square", name: "Blue", width: 75, height: 75 },
@@ -13,8 +15,15 @@ const sample = [
 
 const font = "bold 9pt Helvetica, Arial, sans-serif";
 
+const resizeAdornment = {
+    desiredSize: new go.Size(6, 6), 
+    fill: "lightblue", 
+    stroke: "deepskyblue"
+};
+
 export default {
     sample,
     palette,
-    font
+    font,
+    resizeAdornment
 }

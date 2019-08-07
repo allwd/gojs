@@ -35,24 +35,26 @@ const resizeAdornmentTemplate =
     make(go.Adornment, "Spot",
         { locationSpot: go.Spot.Right },
         make(go.Placeholder),
-        make(go.Shape, { alignment: go.Spot.TopLeft, cursor: "nw-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
-        make(go.Shape, { alignment: go.Spot.Top, cursor: "n-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
-        make(go.Shape, { alignment: go.Spot.TopRight, cursor: "ne-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+        make(go.Shape, { alignment: go.Spot.TopLeft, cursor: "nw-resize", ...config.resizeAdornment }),
+        make(go.Shape, { alignment: go.Spot.Top, cursor: "n-resize", ...config.resizeAdornment }),
+        make(go.Shape, { alignment: go.Spot.TopRight, cursor: "ne-resize", ...config.resizeAdornment }),
 
-        make(go.Shape, { alignment: go.Spot.Left, cursor: "w-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
-        make(go.Shape, { alignment: go.Spot.Right, cursor: "e-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
+        make(go.Shape, { alignment: go.Spot.Left, cursor: "w-resize", ...config.resizeAdornment }),
+        make(go.Shape, { alignment: go.Spot.Right, cursor: "e-resize", ...config.resizeAdornment }),
 
-        make(go.Shape, { alignment: go.Spot.BottomLeft, cursor: "se-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
-        make(go.Shape, { alignment: go.Spot.Bottom, cursor: "s-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" }),
-        make(go.Shape, { alignment: go.Spot.BottomRight, cursor: "sw-resize", desiredSize: new go.Size(6, 6), fill: "lightblue", stroke: "deepskyblue" })
+        make(go.Shape, { alignment: go.Spot.BottomLeft, cursor: "se-resize", ...config.resizeAdornment }),
+        make(go.Shape, { alignment: go.Spot.Bottom, cursor: "s-resize", ...config.resizeAdornment }),
+        make(go.Shape, { alignment: go.Spot.BottomRight, cursor: "sw-resize", ...config.resizeAdornment })
     );
 
 const nodeTemplate = make(go.Node, "Auto",
     {
-        locationSpot: go.Spot.Center
+        locationSpot: go.Spot.Center,
+        resizable: true, 
+        resizeObjectName: "PANEL", 
+        // resizeAdornmentTemplate
     },
     new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-    { resizable: true, resizeObjectName: "PANEL", resizeAdornmentTemplate },
     make(go.Shape, "Ellipse",
         new go.Binding("figure", "figure"),
         new go.Binding("fill", "name"),
@@ -91,7 +93,6 @@ const linkTemplate = make(go.Link,
         mouseEnter: function (_, link) { link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)"; },
         mouseLeave: function (_, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; }
     },
-    new go.Binding("points").makeTwoWay(),
     make(go.Shape,
         { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
     make(go.Shape,
@@ -118,11 +119,6 @@ const linkTemplate = make(go.Link,
 const groupTemplate = make(go.Group, "Vertical",
     {
         resizable: true,
-        mouseDragEnter: (e, group, _) => actions.highlightGroup(e, group, true),
-        mouseDragLeave: (e, group, _) => actions.highlightGroup(e, group, false),
-        mouseDrop: (e, node) => actions.finishDrop(e, node),
-        selectionObjectName: "PANEL",
-        // computesBoundsAfterDrag: true,
         handlesDragDropForMembers: true,
         ungroupable: true,
         layout:
@@ -130,7 +126,10 @@ const groupTemplate = make(go.Group, "Vertical",
                 {
                     wrappingColumn: 1, alignment: go.GridLayout.Position,
                     cellSize: new go.Size(1, 1), spacing: new go.Size(4, 4)
-                })
+                }),
+        mouseDragEnter: (e, group, _) => actions.highlightGroup(e, group, true),
+        mouseDragLeave: (e, group, _) => actions.highlightGroup(e, group, false),
+        mouseDrop: (e, node) => actions.finishDrop(e, node)
     },
     new go.Binding("background", "isHighlighted", isHighlighted => isHighlighted ? "rgba(255,0,0,0.2)" : "transparent").ofObject(),
     make(go.Panel, "Auto",
