@@ -15,15 +15,8 @@ const sample = [
 
 const font = "bold 9pt Helvetica, Arial, sans-serif";
 
-const resizeAdornment = {
-    desiredSize: new go.Size(6, 6), 
-    fill: "lightblue", 
-    stroke: "deepskyblue"
-};
-
 export default {
     sample,
     palette,
-    font,
-    resizeAdornment
+    font
 }

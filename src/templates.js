@@ -31,28 +31,11 @@ function makePort(portId, alignment, spot, fromLinkable, toLinkable) {
         });
 }
 
-const resizeAdornmentTemplate =
-    make(go.Adornment, "Spot",
-        { locationSpot: go.Spot.Right },
-        make(go.Placeholder),
-        make(go.Shape, { alignment: go.Spot.TopLeft, cursor: "nw-resize", ...config.resizeAdornment }),
-        make(go.Shape, { alignment: go.Spot.Top, cursor: "n-resize", ...config.resizeAdornment }),
-        make(go.Shape, { alignment: go.Spot.TopRight, cursor: "ne-resize", ...config.resizeAdornment }),
-
-        make(go.Shape, { alignment: go.Spot.Left, cursor: "w-resize", ...config.resizeAdornment }),
-        make(go.Shape, { alignment: go.Spot.Right, cursor: "e-resize", ...config.resizeAdornment }),
-
-        make(go.Shape, { alignment: go.Spot.BottomLeft, cursor: "se-resize", ...config.resizeAdornment }),
-        make(go.Shape, { alignment: go.Spot.Bottom, cursor: "s-resize", ...config.resizeAdornment }),
-        make(go.Shape, { alignment: go.Spot.BottomRight, cursor: "sw-resize", ...config.resizeAdornment })
-    );
-
 const nodeTemplate = make(go.Node, "Auto",
     {
         locationSpot: go.Spot.Center,
         resizable: true, 
-        resizeObjectName: "PANEL", 
-        // resizeAdornmentTemplate
+        resizeObjectName: "PANEL",
     },
     new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
     make(go.Shape, "Ellipse",
@@ -156,6 +139,5 @@ const groupTemplate = make(go.Group, "Vertical",
 export default {
     groupTemplate,
     nodeTemplate,
-    linkTemplate,
-    resizeAdornmentTemplate
+    linkTemplate
 }
