@@ -10,7 +10,6 @@ import state from './state';
  *   app.actions.updateData(app.state.diagram.findNodeForKey('-3'), 'loc', '-220 -90')
  */
 function updateData(node, key, value) {
-    console.log(node, key, value)
     state.diagram.model.commit(model => {
         model.set(node.data, key, value);
     }, `change ${key} to ${String(value)}`)
