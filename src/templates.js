@@ -104,21 +104,30 @@ const linkTemplate = make(go.Link,
 const groupTemplate = make(go.Group, "Auto",
     {
         resizable: true,
-        handlesDragDropForMembers: true,
         ungroupable: true,
+        // desiredSize: new go.Size(100, 100),
+        // locationObjectName: 'group',
         resizeObjectName: 'group',
+        computesBoundsIncludingLocation: true,
         mouseDragEnter: (e, group, _) => actions.highlightGroup(e, group, true),
         mouseDragLeave: (e, group, _) => actions.highlightGroup(e, group, false),
-        mouseDrop: (e, node) => actions.finishDrop(e, node)
+        mouseDrop: (e, node) => actions.finishDrop(e, node),
     },
+    new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+    new go.Binding("position", "position").makeTwoWay(),
+    // new go.Binding("width", "width").makeTwoWay(),
     new go.Binding("background", "isHighlighted", isHighlighted => isHighlighted ? "rgba(255,0,0,0.2)" : "transparent").ofObject(),
-    make(go.Panel, "Spot",
+    make(go.Panel, "Auto",
         make(go.Shape, "Rectangle",
+        new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify),
             {
                 name: 'group',
                 minSize: new go.Size(100, 100),
-                fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3
-            }),
+                fill: "rgba(128,128,128,0.2)", 
+                stroke: "gray", 
+                strokeWidth: 3
+            }
+        ),
         make(go.TextBlock,
             {
                 font: "bold 19px sans-serif",

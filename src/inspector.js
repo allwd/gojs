@@ -2,8 +2,8 @@ import state from './state';
 
 export default function initInspector() {
     new Inspector('editable', state.diagram, {
-        showAllProperties: false,
-        includesOwnProperties: false,
+        // showAllProperties: false,
+        // includesOwnProperties: false,
         properties: {
             "name": {
                 type: "select",

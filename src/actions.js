@@ -5,8 +5,12 @@ import state from './state';
  *   @example
  *   // updates node with key -2's name to green 
  *   app.actions.updateData(app.state.diagram.findNodeForKey("-2"), "name", "Green")
+ *   @example
+ *   // updates node's location
+ *   app.actions.updateData(app.state.diagram.findNodeForKey("-3"), "loc", "-220 -90")
  */
 function updateData(node, key, value) {
+    console.log(node, key, value)
     state.diagram.model.commit(model => {
         model.set(node.data, key, value);
     }, `change ${key} to ${String(value)}`)
