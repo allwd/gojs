@@ -62,12 +62,6 @@ const ensureGroupBounds = (group) => {
         bottom = Math.max(node.actualBounds.bottom, bottom)
     })
 
-    if(group.actualBounds.right < right) {
-        const dataSize = go.Size.parse(group.data.size);
-        group.diagram.model.setDataProperty(group.data, 'size', go.Size.stringify(new go.Size(dataSize.width + right - group.actualBounds.right, dataSize.height)))
-       // group.desiredSize = new go.Size(group.desiredSize.width + right - group.actualBounds.right, group.desiredSize.height);
-    }
-
     console.log(group.actualBounds.left, left)
     if (
         group.actualBounds.left > left ||
@@ -76,6 +70,9 @@ const ensureGroupBounds = (group) => {
         group.actualBounds.bottom < bottom
     ) {
         console.log(group.actualBounds.left > left, group.actualBounds.top > top, group.actualBounds.right < right, group.actualBounds.bottom < bottom)
+        state.diagram.toolManager.resizingTool.doCancel()
+    } else {
+        state.diagram.toolManager.resizingTool.doActivate()
     }
 }
 
