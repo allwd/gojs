@@ -44,7 +44,7 @@ const nodeTemplate = make(go.Node, 'Auto',
         },
         new go.Binding('figure', 'figure'),
         new go.Binding('fill', 'name'),
-        new go.Binding('size', 'size', go.Size.parse).makeTwoWay(go.Size.stringify)
+        new go.Binding('desiredSize', 'size', go.Size.parse).makeTwoWay(go.Size.stringify)
     ),
     makePort('T', go.Spot.Top, go.Spot.Top, false, true),
     makePort('L', go.Spot.Left, go.Spot.Left, true, true),

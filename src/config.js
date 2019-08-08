@@ -3,9 +3,9 @@ import go from 'gojs';
 const sizeToString = (w, h) => go.Size.stringify(new go.Size(w, h));
 
 const palette = [
-    { figure: 'RoundedRectangle', name: 'Green', size: sizeToString(150, 75) },
-    { figure: 'Square', name: 'Blue', size: sizeToString(120, 120) },
-    { figure: 'TriangleUp', name: 'Red', size: sizeToString(120, 75) },
+    { figure: 'RoundedRectangle', name: 'Green', size: "150 75" },
+    { figure: 'Square', name: 'Blue', size: "90 90" },
+    { figure: 'TriangleUp', name: 'Red', size: "150 75" },
     { figure: 'Group', category: 'Group', name: '', isGroup: true }
 ];
 

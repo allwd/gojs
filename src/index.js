@@ -60,16 +60,8 @@ window.onload = function () {
         x -= width/2
         y -= height/2
         const {x: groupX, y: groupY} = go.Point.parse(group.data.loc)
-        let newX = groupX
-        let newY = groupY
-
-        if (x < groupX) {
-            newX = x
-        }
-
-        if (y < groupY) {
-            newY = y
-        }
+        let newX = Math.min(x, groupX)
+        let newY = Math.min(y, groupY)
 
         moveGraphObject(group, newX, newY)
         const { width: groupWidth, height: groupHeight }= go.Size.parse(group.data.size)
