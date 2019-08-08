@@ -48,25 +48,20 @@ window.onload = function () {
         go.Node.prototype.move.call(object, Object.assign(object.position.copy(), { x, y }), true)
 
     state.diagram.addDiagramListener('PartResized', (object) => {
-        window.test2 = object
         const group = object.subject.panel.containingGroup
         if (!group) {
             return
         }
 
         const { top, right, bottom, left } = object.subject.actualBounds
-        window.test3 = object
         console.log(top, left)
         const { width, height } = object.subject
         let {x, y} = go.Point.parse(object.subject.panel.data.loc)
-        console.log(x, y, width, height, "lol")
         x -= width/2
         y -= height/2
         const {x: groupX, y: groupY} = go.Point.parse(group.data.loc)
         let newX = groupX
         let newY = groupY
-        console.log(x, y, groupX, groupY)
-        console.log(`old x, y: ${groupX} ${groupY}`)
 
         if (x < groupX) {
             newX = x
@@ -78,13 +73,11 @@ window.onload = function () {
 
 
         moveGroup(group, newX, newY)
-        window.test5 = group
         const { width: groupWidth, height: groupHeight }= go.Size.parse(group.data.size)
-        console.log("lol", width, height, Math.max(width, groupWidth), Math.max(height, groupWidth))
         const newWidth = Math.max(width, x < groupX ? groupWidth - (newX - groupX)  : groupWidth)
         const newHeight = Math.max(height, y < groupY ? groupHeight - (newY - groupY) : groupHeight)
         console.log(newWidth, newHeight)
-        actions.updateData(group, "size", `${newWidth} ${newHeight}`)
+        actions.updateData(group, 'size', `${newWidth} ${newHeight}`)
 
         /*
         More or less TODO:
@@ -98,25 +91,25 @@ window.onload = function () {
         - call updateData with the new size
         */
 
-        // app.state.diagram.findNodeForKey("-4").loc = new go.Point(-220, -90)
-        // app.actions.updateData(app.state.diagram.findNodeForKey("-4"), "width", width)
+        // app.state.diagram.findNodeForKey('-4').loc = new go.Point(-220, -90)
+        // app.actions.updateData(app.state.diagram.findNodeForKey('-4'), 'width', width)
         // group.move(new go.Point(groupX, groupY), true)
-        // app.state.diagram.findNodeForKey("-4").move(new go.Point(-320, -50))
-        // app.actions.updateData(app.state.diagram.findNodeForKey("-4"), "loc", "-220 -90")
-        // actions.updateData(group.data, "loc", `${L} ${R}`)
+        // app.state.diagram.findNodeForKey('-4').move(new go.Point(-320, -50))
+        // app.actions.updateData(app.state.diagram.findNodeForKey('-4'), 'loc', '-220 -90')
+        // actions.updateData(group.data, 'loc', `${L} ${R}`)
 
     })
 
     // state.diagram.toolManager.resizingTool.resize = (obj) => {
     //     window.test = obj
-    //     console.log("resizingTool", obj)
+    //     console.log('resizingTool', obj)
     // }
 
     state.diagram.toolManager.linkingTool.linkValidation = actions.validateConnection
 }
 
 window.onresize = function () {
-    if (typeof state.diagram !== "undefined") {
+    if (typeof state.diagram !== 'undefined') {
         state.diagram.requestUpdate();
     }
 }
