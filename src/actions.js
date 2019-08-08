@@ -16,6 +16,42 @@ function updateData(node, key, value) {
     }, `change ${key} to ${String(value)}`)
 }
 
+const moveGraphObject = (object, x, y) => 
+    go.Node.prototype.move.call(object, Object.assign(object.position.copy(), { x, y }), true)
+
+const resizeParentGroups = (key) => {
+    const { containingGroup } = state.diagram.findNodeForKey(key)
+    if (containingGroup && containingGroup.memberParts.count) {
+        let { top, left, right, bottom } = containingGroup.actualBounds
+        containingGroup.memberParts.each(node => {
+            top = Math.min(node.actualBounds.top, top)
+            left = Math.min(node.actualBounds.left, left)
+            right = Math.max(node.actualBounds.right, right)
+            bottom = Math.max(node.actualBounds.bottom, bottom)
+        })
+        
+        let { right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
+        window.test2 = containingGroup
+        let { width, height }= go.Size.parse(containingGroup.data.size)
+        
+        width += right - oldRight
+        height += bottom - oldBottom
+
+        if (right > oldRight) {
+            width = Math.max(width, right - left - 2)
+        }
+
+        if (bottom > oldBottom) {
+            height = Math.max(height, bottom - top - 2)
+        }
+
+        moveGraphObject(containingGroup, left, top)
+        updateData(containingGroup, 'size', `${width} ${height}`)
+
+        resizeParentGroups(containingGroup.key)
+    }
+}
+
 function validateConnection(fromNode, fromPort, toNode, toPort) {
     return fromNode.data.figure !== toNode.data.figure || String(fromNode.data.name).toLowerCase() === 'green'
 }
@@ -69,6 +105,8 @@ function finishDrop(event, group) {
 
     if (!ok) {
         event.diagram.currentTool.doCancel();
+    } else {
+        setTimeout(() => resizeParentGroups(group.diagram.selection.first().key), 1)
     }
 }
 
@@ -131,5 +169,7 @@ export default {
     finishDrop,
     highlightGroup,
     reloadLinks,
-    updateData
+    updateData,
+    moveGraphObject,
+    resizeParentGroups
 }

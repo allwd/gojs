@@ -10,7 +10,7 @@ const palette = [
 ];
 
 const sample = [
-    { 'figure': 'Group', 'category': 'Group', 'isGroup': true, 'name': 'Test', 'key': -4, 'loc': '-259 -40' },
+    { 'figure': 'Group', 'category': 'Group', 'isGroup': true, 'name': 'Test', 'key': -4, 'loc': '-259 -40', 'size': '100 120' },
     { 'fill': 'Red', 'figure': 'TriangleUp', 'color': 'Blue', 'category': 'TriangleUp', 'name': 'Red', 'key': -3, 'loc': '-219 -40' },
     { 'fill': 'blue', 'figure': 'Square', 'category': 'Square', 'name': 'Blue', 'key': -2, 'loc': '-211 -150' }
 ];
