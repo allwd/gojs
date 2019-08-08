@@ -29,21 +29,23 @@ const resizeParentGroups = (key) => {
             bottom = Math.max(node.actualBounds.bottom, bottom)
         })
         
-        let { right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
+        let { left: oldLeft, top: oldTop, right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
         let { width, height }= go.Size.parse(containingGroup.data.size)
         
-        width += right - oldRight
-        height += bottom - oldBottom
+        width += right - oldRight + (oldLeft - left)
+        height += bottom - oldBottom + (oldTop - top)
 
         if (right > oldRight) {
-            width = Math.max(width, right - left - 2)
+            width = Math.max(width, right - left - 3)
         }
 
         if (bottom > oldBottom) {
-            height = Math.max(height, bottom - top - 2)
+            height = Math.max(height, bottom - top - 3)
         }
 
-        moveGraphObject(containingGroup, left, top)
+        containingGroup.position = new go.Point(left, top)
+        // containingGroup.move(Object.assign(containingGroup.position.copy(), { x: left, y: top }), false)
+        // moveGraphObject(containingGroup, left, top)
         updateData(containingGroup, 'size', `${width} ${height}`)
         // containingGroup.findObject('group').setProperties({minSize: new go.Size(right - left - 2, bottom - top - 2)})
 
@@ -60,13 +62,20 @@ const ensureGroupBounds = (group) => {
         bottom = Math.max(node.actualBounds.bottom, bottom)
     })
 
+    if(group.actualBounds.right < right) {
+        const dataSize = go.Size.parse(group.data.size);
+        group.diagram.model.setDataProperty(group.data, 'size', go.Size.stringify(new go.Size(dataSize.width + right - group.actualBounds.right, dataSize.height)))
+       // group.desiredSize = new go.Size(group.desiredSize.width + right - group.actualBounds.right, group.desiredSize.height);
+    }
+
+    console.log(group.actualBounds.left, left)
     if (
         group.actualBounds.left > left ||
         group.actualBounds.top > top ||
         group.actualBounds.right < right ||
         group.actualBounds.bottom < bottom
     ) {
-        state.diagram.toolManager.resizingTool.doCancel()
+        console.log(group.actualBounds.left > left, group.actualBounds.top > top, group.actualBounds.right < right, group.actualBounds.bottom < bottom)
     }
 }
 
