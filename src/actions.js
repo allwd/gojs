@@ -45,8 +45,28 @@ const resizeParentGroups = (key) => {
 
         moveGraphObject(containingGroup, left, top)
         updateData(containingGroup, 'size', `${width} ${height}`)
+        // containingGroup.findObject('group').setProperties({minSize: new go.Size(right - left - 2, bottom - top - 2)})
 
         resizeParentGroups(containingGroup.key)
+    }
+}
+
+const ensureGroupBounds = (group) => {
+    let [top, right, bottom, left] = [Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
+    group.memberParts.each(node => {
+        top = Math.min(node.actualBounds.top, top)
+        left = Math.min(node.actualBounds.left, left)
+        right = Math.max(node.actualBounds.right, right)
+        bottom = Math.max(node.actualBounds.bottom, bottom)
+    })
+
+    if (
+        group.actualBounds.left > left ||
+        group.actualBounds.top > top ||
+        group.actualBounds.right < right ||
+        group.actualBounds.bottom < bottom
+    ) {
+        state.diagram.toolManager.resizingTool.doCancel()
     }
 }
 
@@ -169,5 +189,6 @@ export default {
     reloadLinks,
     updateData,
     moveGraphObject,
-    resizeParentGroups
+    resizeParentGroups,
+    ensureGroupBounds
 }

@@ -7,6 +7,15 @@ import state from './state';
 import actions from './actions';
 import config from './config';
 
+/*
+ - check if resize is on left or right edge
+ - if it is on the left edge, check most left element and position of right boundary
+ - min width will be rightBoundary - leftElementX - strokeWidth
+ - similar for height on top
+ - on right side min width rightElementX - leftBoundary - strokeWidth
+ - similar for height on bottom
+ */
+
 window.onload = function () {
     initDiagram();
     initPalette();
@@ -44,8 +53,12 @@ window.onload = function () {
 
         obj.desiredSize = object.size;
         go.Node.prototype.move.call(part, pos);
+        window.adornedObject = obj
 
         actions.resizeParentGroups(part.key)
+        if (part.data.isGroup) {
+            actions.ensureGroupBounds(part)
+        }
     };
 
 
