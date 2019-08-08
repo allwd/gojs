@@ -31,7 +31,6 @@ const resizeParentGroups = (key) => {
         })
         
         let { right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
-        window.test2 = containingGroup
         let { width, height }= go.Size.parse(containingGroup.data.size)
         
         width += right - oldRight
