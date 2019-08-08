@@ -4,7 +4,7 @@ import config from './config';
 const make = go.GraphObject.make;
 
 export default function initPalette() {
-    state.palette = make(go.Palette, "palette",
+    state.palette = make(go.Palette, 'palette',
         {
             nodeTemplate: state.diagram.nodeTemplate,
             groupTemplate: state.diagram.groupTemplate,

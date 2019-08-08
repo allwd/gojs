@@ -4,10 +4,10 @@ import state from './state';
 /**
  *   @example
  *   // updates node with key -2's name to green 
- *   app.actions.updateData(app.state.diagram.findNodeForKey("-2"), "name", "Green")
+ *   app.actions.updateData(app.state.diagram.findNodeForKey('-2'), 'name', 'Green')
  *   @example
  *   // updates node's location
- *   app.actions.updateData(app.state.diagram.findNodeForKey("-3"), "loc", "-220 -90")
+ *   app.actions.updateData(app.state.diagram.findNodeForKey('-3'), 'loc', '-220 -90')
  */
 function updateData(node, key, value) {
     console.log(node, key, value)
@@ -17,16 +17,16 @@ function updateData(node, key, value) {
 }
 
 function validateConnection(fromNode, fromPort, toNode, toPort) {
-    return fromNode.data.figure !== toNode.data.figure || String(fromNode.data.name).toLowerCase() === "green"
+    return fromNode.data.figure !== toNode.data.figure || String(fromNode.data.name).toLowerCase() === 'green'
 }
 
 function save() {
-    document.getElementById("savedModel").value = state.diagram.model.toJson();
+    document.getElementById('savedModel').value = state.diagram.model.toJson();
     state.diagram.isModified = false;
 }
 
 function load() {
-    state.diagram.model = go.Model.fromJson(document.getElementById("savedModel").value);
+    state.diagram.model = go.Model.fromJson(document.getElementById('savedModel').value);
 }
 
 function exportToSvg() {
@@ -56,8 +56,8 @@ function exportToSvg() {
 function exportToJpeg() {
     const img = state.diagram.makeImageData({
         scale: 1.0,
-        type: "image/jpeg",
-        background: "white"
+        type: 'image/jpeg',
+        background: 'white'
     })
     window.open(img);
 }
@@ -91,13 +91,13 @@ function highlightGroup(event, group, show) {
 }
 
 async function reloadLinks(event = null) {
-    if (event && event.modelChange !== "nodeDataArray") {
+    if (event && event.modelChange !== 'nodeDataArray') {
         return
     }
 
     const exclude = []
     const nodes = state.diagram.model.nodeDataArray.filter(node => {
-        if (String(node.name).toLowerCase() === "green") {
+        if (String(node.name).toLowerCase() === 'green') {
             exclude.push(node.key)
             return true
         }

@@ -3,26 +3,26 @@ import state from './state';
 export default function initInspector() {
     new Inspector('editable', state.diagram, {
         // showAllProperties: false,
-        // includesOwnProperties: false,
+        includesOwnProperties: false,
         properties: {
-            "name": {
-                type: "select",
+            'name': {
+                type: 'select',
                 choices: [
-                    "Red", "Green", "Blue"
+                    'Red', 'Green', 'Blue'
                 ],
                 show: Inspector.showIfNode
             },
-            "figure": {
-                type: "select",
+            'figure': {
+                type: 'select',
                 choices: [
-                    "RoundedRectangle",
-                    "Square",
-                    "TriangleUp"
+                    'RoundedRectangle',
+                    'Square',
+                    'TriangleUp'
                 ],
                 show: Inspector.showIfNode
             },
-            "color": {
-                type: "color",
+            'color': {
+                type: 'color',
                 show: Inspector.showIfNode
             }
         }
