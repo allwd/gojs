@@ -71,12 +71,7 @@ window.onload = function () {
             newY = y
         }
 
-
-<<<<<<< HEAD
         moveGraphObject(group, newX, newY)
-=======
-        moveGroup(group, newX, newY)
->>>>>>> 43eedbab9b85d686675c37ea4a048fb40e91dd89
         const { width: groupWidth, height: groupHeight }= go.Size.parse(group.data.size)
         const newWidth = Math.max(width, x < groupX ? groupWidth - (newX - groupX)  : groupWidth)
         const newHeight = Math.max(height, y < groupY ? groupHeight - (newY - groupY) : groupHeight)
