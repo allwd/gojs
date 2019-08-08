@@ -21,16 +21,22 @@ const moveGraphObject = (object, x, y) =>
 const resizeParentGroups = (key) => {
     const { containingGroup } = state.diagram.findNodeForKey(key)
     if (containingGroup && containingGroup.memberParts.count) {
-        let { top, left, right, bottom } = containingGroup.actualBounds
+        let { top: oldTop, left: oldLeft, right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
+        let [newTop, newRight, newBottom, newLeft] = [Number.MAX_VALUE, 0, 0, Number.MAX_VALUE]
         containingGroup.memberParts.each(node => {
-            top = Math.min(node.actualBounds.top, top)
-            left = Math.min(node.actualBounds.left, left)
-            right = Math.max(node.actualBounds.right, right)
-            bottom = Math.max(node.actualBounds.bottom, bottom)
+            // TODO just save which element is top left, which top right, calculate min possible width and height
+            newTop = Math.min(node.actualBounds.top, newTop)
+            newRight = Math.max(node.actualBounds.right, newRight)
+            newBottom = Math.max(node.actualBounds.bottom, newBottom)
+            newLeft = Math.min(node.actualBounds.left, newLeft)
         })
+
+        let top = Math.min(oldTop, newTop)
+        let right = Math.max(oldRight, newRight)
+        let bottom = Math.max(oldBottom, newBottom)
+        let left = Math.min(oldLeft, newLeft)
         
-        let { right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
-        let { width, height }= go.Size.parse(containingGroup.data.size)
+        let { width, height } = go.Size.parse(containingGroup.data.size)
         
         width += right - oldRight
         height += bottom - oldBottom
@@ -42,9 +48,10 @@ const resizeParentGroups = (key) => {
         if (bottom > oldBottom) {
             height = Math.max(height, bottom - top - 2)
         }
-
+        window.test = containingGroup
         moveGraphObject(containingGroup, left, top)
         updateData(containingGroup, 'size', `${width} ${height}`)
+        containingGroup.findObject('group').setProperties({minSize: new go.Size(newRight - newLeft, newBottom - newTop)})
 
         resizeParentGroups(containingGroup.key)
     }
