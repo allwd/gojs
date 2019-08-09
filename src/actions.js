@@ -62,32 +62,23 @@ const ensureGroupBounds = (object, group, resize, resize2) => {
     })
 
     const {top: Top, left: Left, right: Right, bottom: Bottom} = group.actualBounds
-    console.log(object.left, Left + object.left, left)
     if (object.left > 0 || object.top > 0) {
-        if (right + object.left <= Right && bottom + object.top <= Bottom) {
-            console.log("resizing")
-            resize()
-            return
-        // } else {
-        //     // console.log
-        //     const oldObj = app.state.diagram.findNodeForKey('-3')
-        //     const teest = object
-        //     // teest.bounds = oldObj.actualBounds
-        //     teest.left = Math.max(oldObj.actualBounds.right - right, 0)
-        //     window.test = object
-        //     state.diagram.toolManager.resizingTool.computeReshape = function() { return false; }
-        //     resize2(teest)
-        //     state.diagram.toolManager.resizingTool.computeReshape = function() { return true; }
-            // const location = go.Point.parse(oldObj.data.loc)
-            // group.diagram.model.setDataProperty(group.data, 'loc', `${Math.max(Left, left, oldObj.actualBounds.left)} ${Math.min(Top, top)}`)
-            // const dataSize = go.Size.parse(group.data.size);
-            // console.log(oldObj.right, "LOOOL")
-            // group.diagram.model.setDataProperty(group.data, 'size', `${oldObj.actualBounds.right - Left} ${dataSize.height}`)
-            return
+        if (!(right + object.left <= Right && bottom + object.top <= Bottom)) {
+            const oldObj = app.state.diagram.findNodeForKey('-3')
+            const location = go.Point.parse(oldObj.data.loc)
+            const dataSize = go.Size.parse(group.data.size);
+            object.setSize(new go.Size(oldObj.actualBounds.right - Left, dataSize.height))
+            object.setPoint(new go.Point(location.x, location.y))
+
+            group.diagram.model.setDataProperty(group.data, 'loc', `${Math.max(Left, left, oldObj.actualBounds.left)} ${Math.min(Top, top)}`)
+            group.diagram.model.setDataProperty(group.data, 'size', `${oldObj.actualBounds.right - Left} ${dataSize.height}`)
         }
-    } else {
-        resize()
+
+        resize(object)
+        return
     }
+    
+    resize(object)
 
     if(group.actualBounds.right < right || group.actualBounds.bottom < bottom) {
         const dataSize = go.Size.parse(group.data.size);

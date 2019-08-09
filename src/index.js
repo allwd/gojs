@@ -30,14 +30,13 @@ window.onload = function () {
             return;
         }
 
-        const resize = () => go.ResizingTool.prototype.resize.call(this, object);
-        const resize2 = (o) => go.ResizingTool.prototype.resize.call(this, o);
+        const resize = (rect) => go.ResizingTool.prototype.resize.call(this, rect);
 
         const obj = this.adornedObject;
         const part = obj.part;
         actions.resizeParentGroups(part.key)
         if (part.data.isGroup) {
-            actions.ensureGroupBounds(object, part, resize, resize2)
+            actions.ensureGroupBounds(object, part, resize)
         } else {
             resize()
         }
