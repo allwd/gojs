@@ -64,7 +64,7 @@ const ensureGroupBounds = (object, group, resize, resize2) => {
     const {top: Top, left: Left, right: Right, bottom: Bottom} = group.actualBounds
     if (object.left > 0 || object.top > 0) {
         if (!(right + object.left <= Right && bottom + object.top <= Bottom)) {
-            const oldObj = app.state.diagram.findNodeForKey(group.key)
+            const oldObj = app.state.diagram.findNodeForKey("-3")
             const location = go.Point.parse(oldObj.data.loc)
             object.setSize(new go.Size(oldObj.actualBounds.right - Left, oldObj.actualBounds.bottom - Top))
             object.setPoint(new go.Point(location.x, location.y))
