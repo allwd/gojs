@@ -62,7 +62,7 @@ const ensureGroupBounds = (object, group, resize, resize2) => {
     const { top: Top, left: Left, right: Right, bottom: Bottom } = group.actualBounds
     if ((object.left > 0 && right + object.left > Right) || (object.top > 0 && bottom + object.top > Bottom)) {
         const location = go.Point.parse(group.data.loc)
-        object.setSize(new go.Size(right - Left, bottom - Top))
+        object.setSize(new go.Size(object.left > 0 ? right - Left : object.width, object.top > 0 ? bottom - Top : object.height))
         object.setPoint(new go.Point(location.x, location.y))
 
         resize(object)
@@ -93,7 +93,7 @@ function load(loadEmpty = true) {
         if (loadEmpty === false && !json) {
             return
         }
-        
+
         state.diagram.model = go.Model.fromJson(json)
     }
 }
