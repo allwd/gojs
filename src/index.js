@@ -30,7 +30,7 @@ window.onload = function () {
             return;
         }
 
-        go.ResizingTool.prototype.resize.call(this, object);
+        const resize = () => go.ResizingTool.prototype.resize.call(this, object);
 
         const obj = this.adornedObject;
         const part = obj.part;
@@ -57,9 +57,12 @@ window.onload = function () {
         // // go.Node.prototype.move.call(part, pos);
         // window.adornedObject = obj
 
+        resize()
         actions.resizeParentGroups(part.key)
         if (part.data.isGroup) {
-            actions.ensureGroupBounds(part)
+            actions.ensureGroupBounds(part, resize)
+        } else {
+            // resize()
         }
     };
 
