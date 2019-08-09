@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>Test</title>
@@ -15,7 +16,9 @@
     </div>
     <div class="wrapper">
         <div class="workspace">
-            <div id="palette" class="sidebar"></div>
+            <div class="sidebar">
+                <div id="palette"></div>
+            </div>
             <div class="content">
                 <div class="options">
                     <!-- @TODO: Add saving and loading from local storage -->
@@ -32,10 +35,8 @@
                         JPG
                     </button>
                     <button onclick="app.state.diagram.commandHandler.undo()">
-                        <
-                    </button>
-                    <button onclick="app.state.diagram.commandHandler.redo()">
-                        >
+                        < </button> <button onclick="app.state.diagram.commandHandler.redo()">
+                            >
                     </button>
                     <button onclick="app.state.diagram.commandHandler.increaseZoom()">
                         +

@@ -34,12 +34,12 @@ function makePort(portId, alignment, spot, fromLinkable, toLinkable) {
 const nodeTemplate = make(go.Node, 'Auto',
     {
         resizable: true,
-        resizeObjectName: 'test'
+        resizeObjectName: 'shape'
     },
     new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
     make(go.Shape, 'Ellipse',
         {
-            name: 'test'
+            name: 'shape'
         },
         new go.Binding('figure', 'figure'),
         new go.Binding('fill', 'name'),
