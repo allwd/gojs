@@ -31,6 +31,7 @@ window.onload = function () {
         }
 
         const resize = () => go.ResizingTool.prototype.resize.call(this, object);
+        const resize2 = (o) => go.ResizingTool.prototype.resize.call(this, o);
 
         const obj = this.adornedObject;
         const part = obj.part;
@@ -60,7 +61,7 @@ window.onload = function () {
         // resize()
         actions.resizeParentGroups(part.key)
         if (part.data.isGroup) {
-            actions.ensureGroupBounds(object, part, resize)
+            actions.ensureGroupBounds(object, part, resize, resize2)
         } else {
             resize()
         }

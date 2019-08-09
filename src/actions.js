@@ -53,7 +53,7 @@ const resizeParentGroups = (key) => {
     }
 }
 
-const ensureGroupBounds = (object, group, resize) => {
+const ensureGroupBounds = (object, group, resize, resize2) => {
     let [top, right, bottom, left] = [Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
     group.memberParts.each(node => {
         top = Math.min(node.actualBounds.top, top)
@@ -68,6 +68,22 @@ const ensureGroupBounds = (object, group, resize) => {
         if (right + object.left <= Right && bottom + object.top <= Bottom) {
             console.log("resizing")
             resize()
+            return
+        // } else {
+        //     // console.log
+        //     const oldObj = app.state.diagram.findNodeForKey('-3')
+        //     const lol = object
+        //     // lol.bounds = oldObj.actualBounds
+        //     lol.left = Math.max(oldObj.actualBounds.right - right, 0)
+        //     window.test = object
+        //     state.diagram.toolManager.resizingTool.computeReshape = function() { return false; }
+        //     resize2(lol)
+        //     state.diagram.toolManager.resizingTool.computeReshape = function() { return true; }
+            // const location = go.Point.parse(oldObj.data.loc)
+            // group.diagram.model.setDataProperty(group.data, 'loc', `${Math.max(Left, left, oldObj.actualBounds.left)} ${Math.min(Top, top)}`)
+            // const dataSize = go.Size.parse(group.data.size);
+            // console.log(oldObj.right, "LOOOL")
+            // group.diagram.model.setDataProperty(group.data, 'size', `${oldObj.actualBounds.right - Left} ${dataSize.height}`)
             return
         }
     } else {
