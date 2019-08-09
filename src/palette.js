@@ -8,7 +8,7 @@ export default function initPalette() {
         {
             nodeTemplate: state.diagram.nodeTemplate,
             groupTemplate: state.diagram.groupTemplate,
-            layout: make(go.GridLayout, { wrappingColumn: 1 }),
+            layout: make(go.GridLayout, { wrappingColumn: 1, alignment: go.GridLayout.Location }),
             model: new go.GraphLinksModel(config.palette)
         }
     )

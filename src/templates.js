@@ -33,7 +33,6 @@ function makePort(portId, alignment, spot, fromLinkable, toLinkable) {
 
 const nodeTemplate = make(go.Node, 'Auto',
     {
-        locationSpot: go.Spot.Center,
         resizable: true,
         resizeObjectName: 'test'
     },
@@ -105,7 +104,6 @@ const groupTemplate = make(go.Group, 'Auto',
     {
         resizable: true,
         ungroupable: true,
-        // locationObjectName: 'group',
         resizeObjectName: 'group',
         computesBoundsAfterDrag: true,
         mouseDragEnter: (e, group, _) => actions.highlightGroup(e, group, true),
@@ -113,10 +111,9 @@ const groupTemplate = make(go.Group, 'Auto',
         mouseDrop: (e, node) => actions.finishDrop(e, node),
     },
     new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
-    new go.Binding('position', 'position').makeTwoWay(),
     new go.Binding('background', 'isHighlighted', isHighlighted => isHighlighted ? 'rgba(255,0,0,0.2)' : 'transparent').ofObject(),
     make(go.Panel, 'Auto',
-        make(go.Shape, 'Rectangle',
+        make(go.Shape, 'Rectangle', 
         new go.Binding('desiredSize', 'size', go.Size.parse).makeTwoWay(go.Size.stringify),
             {
                 name: 'group',
