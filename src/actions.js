@@ -82,12 +82,15 @@ function validateConnection(fromNode, fromPort, toNode, toPort) {
 }
 
 function save() {
-    document.getElementById('savedModel').value = state.diagram.model.toJson();
-    state.diagram.isModified = false;
+    if (typeof(Storage) !== "undefined") {
+        localStorage.setItem("gojsDiagram", state.diagram.model.toJson())
+    }
 }
 
 function load() {
-    state.diagram.model = go.Model.fromJson(document.getElementById('savedModel').value);
+    if (typeof(Storage) !== "undefined") {
+        state.diagram.model = go.Model.fromJson(localStorage.getItem('gojsDiagram'))
+    }
 }
 
 function exportToSvg() {
