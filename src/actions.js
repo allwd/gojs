@@ -15,7 +15,7 @@ function updateData(node, key, value) {
     }, `change ${key} to ${String(value)}`)
 }
 
-const moveGraphObject = (object, x, y) => 
+const moveGraphObject = (object, x, y) =>
     go.Node.prototype.move.call(object, Object.assign(object.position.copy(), { x, y }), true)
 
 const resizeParentGroups = (key) => {
@@ -28,10 +28,10 @@ const resizeParentGroups = (key) => {
             right = Math.max(node.actualBounds.right, right)
             bottom = Math.max(node.actualBounds.bottom, bottom)
         })
-        
+
         let { left: oldLeft, top: oldTop, right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
-        let { width, height }= go.Size.parse(containingGroup.data.size)
-        
+        let { width, height } = go.Size.parse(containingGroup.data.size)
+
         width += right - oldRight + (oldLeft - left)
         height += bottom - oldBottom + (oldTop - top)
 
@@ -47,13 +47,12 @@ const resizeParentGroups = (key) => {
         // containingGroup.move(Object.assign(containingGroup.position.copy(), { x: left, y: top }), false)
         // moveGraphObject(containingGroup, left, top)
         updateData(containingGroup, 'size', `${width} ${height}`)
-        // containingGroup.findObject('group').setProperties({minSize: new go.Size(right - left - 2, bottom - top - 2)})
 
         resizeParentGroups(containingGroup.key)
     }
 }
 
-const ensureGroupBounds = (group) => {
+const ensureGroupBounds = (object, group, resize, resize2) => {
     let [top, right, bottom, left] = [Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
     group.memberParts.each(node => {
         top = Math.min(node.actualBounds.top, top)
@@ -62,17 +61,21 @@ const ensureGroupBounds = (group) => {
         bottom = Math.max(node.actualBounds.bottom, bottom)
     })
 
-    console.log(group.actualBounds.left, left)
-    if (
-        group.actualBounds.left > left ||
-        group.actualBounds.top > top ||
-        group.actualBounds.right < right ||
-        group.actualBounds.bottom < bottom
-    ) {
-        console.log(group.actualBounds.left > left, group.actualBounds.top > top, group.actualBounds.right < right, group.actualBounds.bottom < bottom)
-        state.diagram.toolManager.resizingTool.doCancel()
-    } else {
-        state.diagram.toolManager.resizingTool.doActivate()
+    const { top: Top, left: Left, right: Right, bottom: Bottom } = group.actualBounds
+    if ((object.left > 0 && right + object.left > Right) || (object.top > 0 && bottom + object.top > Bottom)) {
+        const location = go.Point.parse(group.data.loc)
+        object.setSize(new go.Size(right - Left, bottom - Top))
+        object.setPoint(new go.Point(location.x, location.y))
+
+        resize(object)
+        return
+    }
+
+    resize(object)
+
+    if (group.actualBounds.right < right || group.actualBounds.bottom < bottom) {
+        const dataSize = go.Size.parse(group.data.size);
+        group.diagram.model.setDataProperty(group.data, 'size', go.Size.stringify(new go.Size(dataSize.width + right - group.actualBounds.right, dataSize.height + bottom - group.actualBounds.bottom)))
     }
 }
 
@@ -142,7 +145,7 @@ function highlightGroup(event, group, show) {
     if (show) {
         const tool = group.diagram.toolManager.draggingTool;
         const map = tool.draggedParts || tool.copiedParts;
-        
+
         if (group.canAddMembers(map.toKeySet())) {
             group.isHighlighted = true;
             return;
