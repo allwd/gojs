@@ -57,12 +57,12 @@ window.onload = function () {
         // // go.Node.prototype.move.call(part, pos);
         // window.adornedObject = obj
 
-        resize()
+        // resize()
         actions.resizeParentGroups(part.key)
         if (part.data.isGroup) {
-            actions.ensureGroupBounds(part, resize)
+            actions.ensureGroupBounds(object, part, resize)
         } else {
-            // resize()
+            resize()
         }
     };
 

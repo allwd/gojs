@@ -53,7 +53,7 @@ const resizeParentGroups = (key) => {
     }
 }
 
-const ensureGroupBounds = (group) => {
+const ensureGroupBounds = (object, group, resize) => {
     let [top, right, bottom, left] = [Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
     group.memberParts.each(node => {
         top = Math.min(node.actualBounds.top, top)
@@ -62,24 +62,21 @@ const ensureGroupBounds = (group) => {
         bottom = Math.max(node.actualBounds.bottom, bottom)
     })
 
+    const {top: Top, left: Left, right: Right, bottom: Bottom} = group.actualBounds
+    console.log(object.left, Left + object.left, left)
+    if (object.left > 0 || object.top > 0) {
+        if (right + object.left <= Right && bottom + object.top <= Bottom) {
+            console.log("resizing")
+            resize()
+            return
+        }
+    } else {
+        resize()
+    }
+
     if(group.actualBounds.right < right || group.actualBounds.bottom < bottom) {
         const dataSize = go.Size.parse(group.data.size);
         group.diagram.model.setDataProperty(group.data, 'size', go.Size.stringify(new go.Size(dataSize.width + right - group.actualBounds.right, dataSize.height + bottom - group.actualBounds.bottom)))
-       // group.desiredSize = new go.Size(group.desiredSize.width + right - group.actualBounds.right, group.desiredSize.height);
-    }
-
-    if (group.actualBounds.top > top) {
-        group.diagram.model.setDataProperty(group.data, 'size', go.Size.stringify(new go.Size(dataSize.width + right - group.actualBounds.right, dataSize.height + bottom - group.actualBounds.bottom)))
-    }
-
-    console.log(group.actualBounds.left, left)
-    if (
-        group.actualBounds.left > left ||
-        group.actualBounds.top > top ||
-        group.actualBounds.right < right ||
-        group.actualBounds.bottom < bottom
-    ) {
-        console.log(group.actualBounds.left > left, group.actualBounds.top > top, group.actualBounds.right < right, group.actualBounds.bottom < bottom)
     }
 }
 
