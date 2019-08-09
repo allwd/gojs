@@ -28,6 +28,7 @@ body {
 
 .content {
     flex-grow: 1;
+    max-height: calc(100% - 60px);
 }
 
 .workspace {
@@ -39,6 +40,7 @@ body {
 .sidebar {
     width: 320px;
     padding: 15px;
+    max-height: calc(100% - 60px);
 }
 
 #preview {
@@ -57,10 +59,7 @@ body {
     height: 150px;
 }
 
-button {
-    border: none;
-    padding: 4px 8px;
-    text-align: center;
+button, select, input {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
@@ -71,8 +70,17 @@ button {
     color: rgb(34, 34, 34); 
     border: 1px solid #f44336;
 }
+
+button {
+    text-align: center;
+    padding: 4px 8px;
+}
   
 button:hover {
     background-color: #f44336;
     color: white;
+}
+
+.inspector {
+    font-size: 18px;
 }
