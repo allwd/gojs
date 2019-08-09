@@ -44,8 +44,6 @@ const resizeParentGroups = (key) => {
         }
 
         containingGroup.position = new go.Point(left, top)
-        // containingGroup.move(Object.assign(containingGroup.position.copy(), { x: left, y: top }), false)
-        // moveGraphObject(containingGroup, left, top)
         updateData(containingGroup, 'size', `${width} ${height}`)
 
         resizeParentGroups(containingGroup.key)
