@@ -15,7 +15,7 @@ function updateData(node, key, value) {
     }, `change ${key} to ${String(value)}`)
 }
 
-const moveGraphObject = (object, x, y) => 
+const moveGraphObject = (object, x, y) =>
     go.Node.prototype.move.call(object, Object.assign(object.position.copy(), { x, y }), true)
 
 const resizeParentGroups = (key) => {
@@ -28,10 +28,10 @@ const resizeParentGroups = (key) => {
             right = Math.max(node.actualBounds.right, right)
             bottom = Math.max(node.actualBounds.bottom, bottom)
         })
-        
+
         let { left: oldLeft, top: oldTop, right: oldRight, bottom: oldBottom } = containingGroup.actualBounds
-        let { width, height }= go.Size.parse(containingGroup.data.size)
-        
+        let { width, height } = go.Size.parse(containingGroup.data.size)
+
         width += right - oldRight + (oldLeft - left)
         height += bottom - oldBottom + (oldTop - top)
 
@@ -61,24 +61,19 @@ const ensureGroupBounds = (object, group, resize, resize2) => {
         bottom = Math.max(node.actualBounds.bottom, bottom)
     })
 
-    const {top: Top, left: Left, right: Right, bottom: Bottom} = group.actualBounds
-    if (object.left > 0 || object.top > 0) {
-        if (!(right + object.left <= Right && bottom + object.top <= Bottom)) {
-            const location = go.Point.parse(group.data.loc)
-            object.setSize(new go.Size(right - Left, bottom - Top))
-            object.setPoint(new go.Point(location.x, location.y))
-
-            group.diagram.model.setDataProperty(group.data, 'loc', `${Math.max(Left, left)} ${Math.max(Top, top)}`)
-            group.diagram.model.setDataProperty(group.data, 'size', `${right - Left} ${bottom - Top}`)
-        }
+    const { top: Top, left: Left, right: Right, bottom: Bottom } = group.actualBounds
+    if ((object.left > 0 && right + object.left > Right) || (object.top > 0 && bottom + object.top > Bottom)) {
+        const location = go.Point.parse(group.data.loc)
+        object.setSize(new go.Size(right - Left, bottom - Top))
+        object.setPoint(new go.Point(location.x, location.y))
 
         resize(object)
         return
     }
-    
+
     resize(object)
 
-    if(group.actualBounds.right < right || group.actualBounds.bottom < bottom) {
+    if (group.actualBounds.right < right || group.actualBounds.bottom < bottom) {
         const dataSize = go.Size.parse(group.data.size);
         group.diagram.model.setDataProperty(group.data, 'size', go.Size.stringify(new go.Size(dataSize.width + right - group.actualBounds.right, dataSize.height + bottom - group.actualBounds.bottom)))
     }
@@ -150,7 +145,7 @@ function highlightGroup(event, group, show) {
     if (show) {
         const tool = group.diagram.toolManager.draggingTool;
         const map = tool.draggedParts || tool.copiedParts;
-        
+
         if (group.canAddMembers(map.toKeySet())) {
             group.isHighlighted = true;
             return;

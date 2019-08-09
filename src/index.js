@@ -38,7 +38,7 @@ window.onload = function () {
         if (part.data.isGroup) {
             actions.ensureGroupBounds(object, part, resize)
         } else {
-            resize()
+            resize(object)
         }
     };
 
