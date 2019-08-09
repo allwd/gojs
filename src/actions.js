@@ -47,7 +47,6 @@ const resizeParentGroups = (key) => {
         // containingGroup.move(Object.assign(containingGroup.position.copy(), { x: left, y: top }), false)
         // moveGraphObject(containingGroup, left, top)
         updateData(containingGroup, 'size', `${width} ${height}`)
-        // containingGroup.findObject('group').setProperties({minSize: new go.Size(right - left - 2, bottom - top - 2)})
 
         resizeParentGroups(containingGroup.key)
     }
@@ -72,12 +71,12 @@ const ensureGroupBounds = (object, group, resize, resize2) => {
         // } else {
         //     // console.log
         //     const oldObj = app.state.diagram.findNodeForKey('-3')
-        //     const lol = object
-        //     // lol.bounds = oldObj.actualBounds
-        //     lol.left = Math.max(oldObj.actualBounds.right - right, 0)
+        //     const teest = object
+        //     // teest.bounds = oldObj.actualBounds
+        //     teest.left = Math.max(oldObj.actualBounds.right - right, 0)
         //     window.test = object
         //     state.diagram.toolManager.resizingTool.computeReshape = function() { return false; }
-        //     resize2(lol)
+        //     resize2(teest)
         //     state.diagram.toolManager.resizingTool.computeReshape = function() { return true; }
             // const location = go.Point.parse(oldObj.data.loc)
             // group.diagram.model.setDataProperty(group.data, 'loc', `${Math.max(Left, left, oldObj.actualBounds.left)} ${Math.min(Top, top)}`)
