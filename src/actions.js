@@ -64,8 +64,6 @@ const ensureGroupBounds = (object, group, resize) => {
         const location = go.Point.parse(group.data.loc)
         object.setSize(new go.Size(object.left > 0 ? right - Left : object.width, object.top > 0 ? bottom - Top : object.height))
         object.setPoint(new go.Point(location.x, location.y))
-
-        // resize(object)
     }
 
     resize(object)
