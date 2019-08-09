@@ -50,7 +50,7 @@ const resizeParentGroups = (key) => {
     }
 }
 
-const ensureGroupBounds = (object, group, resize, resize2) => {
+const ensureGroupBounds = (object, group, resize) => {
     let [top, right, bottom, left] = [Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
     group.memberParts.each(node => {
         top = Math.min(node.actualBounds.top, top)
@@ -65,8 +65,7 @@ const ensureGroupBounds = (object, group, resize, resize2) => {
         object.setSize(new go.Size(object.left > 0 ? right - Left : object.width, object.top > 0 ? bottom - Top : object.height))
         object.setPoint(new go.Point(location.x, location.y))
 
-        resize(object)
-        return
+        // resize(object)
     }
 
     resize(object)
