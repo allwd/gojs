@@ -87,9 +87,14 @@ function save() {
     }
 }
 
-function load() {
+function load(loadEmpty = true) {
     if (typeof(Storage) !== "undefined") {
-        state.diagram.model = go.Model.fromJson(localStorage.getItem('gojsDiagram'))
+        const json = localStorage.getItem('gojsDiagram')
+        if (loadEmpty === false && !json) {
+            return
+        }
+        
+        state.diagram.model = go.Model.fromJson(json)
     }
 }
 

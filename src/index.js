@@ -6,6 +6,7 @@ import initOverview from './overview';
 import state from './state';
 import actions from './actions';
 import config from './config';
+import { loadavg } from 'os';
 
 /*
  - check if resize is on left or right edge
@@ -44,6 +45,8 @@ window.onload = function () {
 
 
     state.diagram.toolManager.linkingTool.linkValidation = actions.validateConnection
+
+    actions.load(false)
 }
 
 window.onresize = function () {
